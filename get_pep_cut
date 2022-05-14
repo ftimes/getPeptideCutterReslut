@@ -1,0 +1,26 @@
+import sys
+import json
+import requests
+# protein='ATHQEAIEKVTGALKINNLR'
+def create_data(seq:str):
+    
+    return {
+        'protein':seq,
+        'enzyme_number':'all_enzymes',
+        'special_enzyme':'Chym',
+        'min_prob':None,
+        'cleavage_map':'cleavage_map',
+        'block_size':60,
+        'alphtable':"alphtable",
+        'cleave_number':"all",
+        'cleave_exactly':None,
+        'cleave_range_min':None,
+        'cleave_range_max':None
+    }
+url = "https://web.expasy.org/cgi-bin/peptide_cutter/peptidecutter.pl"
+# post_data=create_data('ATHQEAIEKVTGALKINNLR')
+response=requests.post(url=url,headers=None,data=post_data)
+
+import pandas as pd
+pt=pd.read_html(response.text)
+pp=pt[0].dropna(how='all').reset_index(drop=True)
